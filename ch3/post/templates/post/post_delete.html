@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2><strong>진짜 삭제 하시려고요??!</strong></h2>
+
+    <div style="display: flex; align-items: center; gap: 10px;">
+    <a href="{% url 'post:post_detail' post.pk %}">
+        <button style="padding: 6px 10px; background-color: #f8ecc9; color: rgb(8, 8, 8); border: none; border-radius: 5px;">
+            다시 확인
+        </button>
+    </a>
+    <a href="{% url 'post:post_detail' post.pk %}">
+        <button style="padding: 6px 10px; background-color: #d3caac; color: rgb(8, 8, 8); border: none; border-radius: 5px;">
+            <strong>더블 쳌</strong>
+        </button>
+    </a>
+    <a href="{% url 'post:post_list' %}">
+        <button style="padding: 6px 10px; background-color: #a79c8e; color: rgb(10, 10, 10); border: none; border-radius: 5px;">
+            취소취소
+        </button>
+    </a>
+    </div>
+    <br>
+
+    <div style="margin-left: 60px;">
+        <form action="{% url 'post:post_delete' post.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="찐!! 삭제" style="padding: 8px 30px; background-color: #eb9f9f; color: #011627; border: none; border-radius: 5px;">
+        </form>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>{{ post.title }}</h2>
+    <p>작성자: {{ post.author }}</p>
+    <p>카테고리: <strong>{{ post.category }}</strong></p>
+    <p>
+        <small>작성일시: {{ post.created_at }}</small>
+        <br>
+        <small>수정일시: {{ post.updated_at }}</small>
+    </p>
+    <hr>
+
+    {% if post.image %}
+		<img src="{{ post.image.url }}" style="max-width: 250px;">
+    {% endif %}	
+
+    <p>{{ post.message|linebreaks }}</p>
+    <hr>
+
+    <a href="{% url 'post:post_update' post.pk %}"><button>글수정</button></a>
+    <a href="{% url 'post:post_delete' pk=post.pk %}"><button>삭제하기</button></a>
+    <br>
+    <br>
+    <!-- 이전 경로가 있으면 버튼에 해당 경로를 연결, 없으면 기본 경로로 설정 -->
+    <a href="{{ referer|default:'/' }}">
+        <button>뒤로 가기</button>
+    </a>
+    <a href="{% url 'post:post_list' %}"><button>전체 게시글 보기</button></a>
+ 
+{% endblock content %}

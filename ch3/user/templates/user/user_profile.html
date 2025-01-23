@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>프로필</h1>
+    <h1>회원 정보</h1>
+
+    <!-- 프로필 이미지가 있으면 설정한 이미지를, 없으면 기본 이미지 보여주기 -->
+    {% if user.profile_image %}
+        <img src="{{ user.profile_image.url }}" width="150" height="150">
+    {% else %}
+        <img src="/media/profile_images/df.jpg" width="150" height="150">
+    {% endif %}
+
+    <p>아이디: <strong>{{ user.username }}</strong></p>
+    <p>소개글</p>
+    {{ user.bio }}
+    <br>
+    <br>
+    <p>이름: {{ user.last_name }}{{ user.first_name }}</p>
+    <p>이메일: {{ user.email }}</p>
+    <br>
+
+    <!-- profile 모델 필드 추가해야함 -->
+    <p>가입한 날짜: {{ user.date_joined }}</p>
+    <br>
+
+    <a href="{% url 'user:update' %}"><button>정보 수정하기</button></a>
+
+    <a href="{% url 'post:category_list' %}"><button>카테고리 별 글 목록으로</button></a>
+
+    <br>
+    <br>
+    <form action="{% url 'user:delete' %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="회원탈퇴" style="padding: 6px 15px; background-color: #f37f7fef; color: rgb(14, 13, 13); border: none; border-radius: 5px;">
+
+    </form>
+
+{% endblock %}

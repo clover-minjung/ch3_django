@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>모아모아</title>
+</head>
+<body>
+    <!-- 페이지 상단에 고정할 것들 정해주기 -->
+    <div class="navbar">
+        <!-- 로그인이 되어있을 경우 -->
+        {% if request.user.is_authenticated %}
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <h3>안녕하세요, {{ user }}님🍀</h3>
+            <div>
+                <a href="{% url 'user:user_profile' %}">
+                    <button style="padding: 6px 8px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">회원정보 수정하기</button>
+                </a>
+                <form action="{% url 'user:logout' %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <input type="submit" value="로그아웃" style="padding: 6px 8px; background-color: #f3a07fef; color: rgb(14, 13, 13); border: none; border-radius: 5px;">
+                </form>
+            </div>
+        </div>
+        
+        <!-- 로그인이 안 되어있을 경우 -->
+        {% else %}
+            <a href="{% url 'user:signup'%}">
+                <button style="padding: 6px 8px; background-color: #89adfc; color: white; border: none; border-radius: 5px;">회원가입</button>
+            </a>
+            <a href="{% url 'user:login'%}">
+                <button style="padding: 6px 8px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">로그인</button>
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- 스타일링 링크 -->
+    <style>
+        a {
+            color: rgb(7, 7, 7);
+            text-decoration: none;
+        }
+        a:hover {
+            color: rgb(36, 131, 255);
+        }
+    </style>
+
+    <!-- block 안에 각 html에서 원하는 값 넣어주기 -->
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</body>
+</html>

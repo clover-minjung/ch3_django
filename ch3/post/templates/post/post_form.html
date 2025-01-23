@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>&nbsp;📖 글쓰기</h1>
+
+<form action="{% if post %}{% url 'post:post_update' post.pk %}{% else %}{% url 'post:post_create' %}{% endif %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- {{ form.as_p }} -->
+    <!-- 내용 입력칸을 label 아래로 내리기 위해 html 템플릿 직접 설정 -->
+    <div>
+        <a href="{% url 'post:post_list' %}">전체 게시글</a>
+        <hr>
+        <label for="{{ form.title.id_for_label }}">제목</label>
+        <br>
+        {{ form.title }}
+    </div>
+    <br>
+    <div>
+        <label for="{{ form.message.id_for_label }}">내용</label>
+        <br>
+        {{ form.message }}
+    </div>
+    <div>
+        <label for="{{ form.category.id_for_label }}">카테고리:</label>
+        {{ form.category }}
+    </div>
+    <br>
+
+    <div>
+        <label for="{{ form.image.id_for_label }}">이미지</label>
+        <br>
+        {{ form.image }}
+    </div>
+    <br>
+
+    <!-- 새 글 작성: post 객체가 전달되지 않음. "작성 완료"와 "작성 취소" 버튼이 표시 -->
+    <!-- 글 수정: post 객체가 전달됨. "수정 완료"와 "수정 취소" 버튼이 표시 -->
+    <button type="submit">{% if post %} 수정 완료 {% else %} 작성 완료 {% endif %}</button>
+    <a href="{% if post %}{% url 'post:post_detail' post.pk %}{% else %}{% url 'post:post_list' %}{% endif %}">
+        <button type="button">{% if post %} 수정 취소 {% else %} 작성 취소 {% endif %}</button>
+    </a>
+
+</form>
+
+{% endblock content %}
